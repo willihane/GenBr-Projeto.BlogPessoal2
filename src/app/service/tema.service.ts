@@ -14,15 +14,31 @@ export class TemaService {
   token = {
     headers: new HttpHeaders().set('Authorization',environment.token)
   }
+// **Métodos Http**
 
-  //Método que busca por todos os temas:
+//Método GET: Aqui busca todos os temas:
   getAllTema(): Observable<Tema[]>{
     return this.http.get<Tema[]>('https://willihane.herokuapp.com/temas', this.token)
   }
 
-//Método post para publicar novos temas
+              //Aqui busca por id do tema:
+  getByIdTema(id: number): Observable<Tema>{
+    return this.http.get<Tema>(`https://willihane.herokuapp.com/temas/${id}`, this.token)
+  }
+
+//Método POST: Aqui insere novos temas:
 postTema(tema: Tema): Observable<Tema>{
   return this.http.post<Tema>('https://willihane.herokuapp.com/temas', tema,this.token)
+}
+
+//Método PUT: Aqui atualiza por tema:
+putTema(tema: Tema): Observable<Tema>{
+  return this.http.put<Tema>('https://willihane.herokuapp.com/temas', tema, this.token)
+}
+
+//Método DELETE: Aqui exclui:
+deleteTema(id: number): Observable<Object> {
+  return this.http.delete(`https://willihane.herokuapp.com/temas/${id}`, this.token)
 }
 
 }
