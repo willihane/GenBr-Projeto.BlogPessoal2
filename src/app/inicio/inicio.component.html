@@ -117,6 +117,10 @@
               {{ item.data | date: "HH:mm" }}</small
             >
           </p>
+
+          <a [routerLink]="['/postagem-edit', item.id]" href="" class="text-info mr-3">Editar</a>
+          <a [routerLink]="['/postagem-delete', item.id]" href="" class="text-danger">Apagar</a>
+
         </div>
       </div>
     </div>
