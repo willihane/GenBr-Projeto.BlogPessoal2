@@ -43,23 +43,26 @@ tipoUsuario(event: any) {
    this.tipoUser = event.target.value
 }
 
-atualizar(){
+atualizar() {
   this.usuario.tipo = this.tipoUser
 
-  if(this.usuario.senha == this.confirmarSenha){
-    this.authService.cadastrar(this.usuario).subscribe((resp:Usuario)=>{
+  if (this.usuario.senha != this.confirmarSenha) {
+    alert('As senhas estão incorretas.')
+  } else {
+    this.authService.atualizar(this.usuario).subscribe((resp: Usuario) => {
       this.usuario = resp;
       alert('Usuario atualizado com sucesso. Faça login novamente!')
-      this.router.navigate(['/entrar'])
       environment.token = ''
       environment.nome = ''
       environment.foto = ''
       environment.id = 0
+
+      this.router.navigate(['/entrar'])
+
     })
-  } else{
-    alert('As senhas estão incorretas.')
   }
 }
+
 
 findByIdUsuario(id: number) {
 this.authService.getByIdUsuario(id).subscribe((resp: Usuario) => {
