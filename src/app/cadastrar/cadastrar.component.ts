@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuario } from '../model/Usuario';
+import { AlertasService } from '../service/alertas.service';
 import { AuthService } from '../service/auth.service';
 
 @Component({
@@ -15,8 +16,9 @@ export class CadastrarComponent implements OnInit {
   tipoUser: string
 
   constructor(
+    private router: Router,
     private authService: AuthService,
-    private router: Router
+    private alertas: AlertasService,
     ) { }
 
   ngOnInit() {
@@ -37,11 +39,11 @@ export class CadastrarComponent implements OnInit {
     if(this.usuario.senha == this.confirmarSenha){
       this.authService.cadastrar(this.usuario).subscribe((resp:Usuario)=>{
         this.usuario = resp;
-        alert('Usuario cadastrado com sucesso!')
+        this.alertas.showAlertSuccess('Usuario cadastrado com sucesso!')
         this.router.navigate(['/entrar'])
       })
     } else{
-      alert('As senhas estão incorretas.')
+      this.alertas.showAlertDanger('As senhas estão incorretas.')
     }
 
   }
