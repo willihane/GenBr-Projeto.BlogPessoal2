@@ -11,13 +11,12 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class UsuarioEditComponent implements OnInit {
 
-  usuario : Usuario = new Usuario()
-  idUsuario: number
+  usuario: Usuario = new Usuario()
   confirmarSenha: string
   tipoUser: string
 
 constructor(
-  private authService: AuthService,
+  private auth: AuthService,
   private route: ActivatedRoute,
   private router: Router,
 ) { }
@@ -27,47 +26,55 @@ constructor(
     window.scroll(0,0)
 
     if (environment.token == '') {
-      this.router.navigate(['/entrar'])
+      alert('Para fazer alteração no perfil é preciso estar logado.');
+      this.router.navigate(['/entrar']);
     }
 
-    this.idUsuario = this.route.snapshot.params['id']
-    this.findByIdUsuario(this.idUsuario)
+    let id = this.route.snapshot.params['id'];
+    this.buscarUsuario(id);
+  }
 
-}
+  buscarUsuario(id: number) {
+    this.auth.getByIdUsuario(id).subscribe((resp: Usuario) => {
+      this.usuario = resp;
+      this.usuario.senha = ''
+      
+    });
+  }
 
 confirmSenha(event: any) {
   this.confirmarSenha = event.target.value
 }
 
+
 tipoUsuario(event: any) {
-   this.tipoUser = event.target.value
+  this.confirmarSenha = event.target.value
 }
-
-atualizar() {
-  this.usuario.tipo = this.tipoUser
-
-  if (this.usuario.senha != this.confirmarSenha) {
-    alert('As senhas estão incorretas.')
-  } else {
-    this.authService.atualizar(this.usuario).subscribe((resp: Usuario) => {
-      this.usuario = resp;
-      alert('Usuario atualizado com sucesso. Faça login novamente!')
-      environment.token = ''
-      environment.nome = ''
-      environment.foto = ''
-      environment.id = 0
-
-      this.router.navigate(['/entrar'])
-
-    })
-  }
-}
-
 
 findByIdUsuario(id: number) {
-this.authService.getByIdUsuario(id).subscribe((resp: Usuario) => {
-this.usuario = resp
-})
-}
+  this.auth.getByIdUsuario(id).subscribe((resp: Usuario) => {
+  this.usuario = resp
+  })
+  }
+
+  atualizar() {
+    this.usuario.tipo = this.tipoUser
+
+    if (this.usuario.senha != this.confirmarSenha) {
+      alert('As senhas estão incorretas.')
+    } else {
+      this.auth.atualizar(this.usuario).subscribe((resp: Usuario) => {
+        this.usuario = resp;
+        alert('Usuário atualizado com sucesso! Faça login novamente.')
+        environment.token = ''
+        environment.nome = ''
+        environment.foto = ''
+        environment.id = 0
+
+        this.router.navigate(['/entrar'])
+
+      })
+    }
+  }
 
 }

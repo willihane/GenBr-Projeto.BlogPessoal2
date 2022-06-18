@@ -1,28 +1,28 @@
-<div class="container-fluid">
+<div class="container-fluid bg-light ff">
   <div class="row d-flex align-items-center">
     <div class="col-md-6">
       <div class="row d-flex justify-content-center">
-        <div class="col-md-6 text-primary">
-          <h1 class="fs-54">Seja bem-vindo(a)!</h1>
-          <h5 class="fs-18 text-info">Expresse aqui seus pensamentos & opiniões.</h5>
+        <div class="col-md-8 text-primary">
+          <h1 class="fs-54">Café com leitura ☕</h1>
+          <h5 class="fs-18 text-info">Deixe aqui seus escritos.</h5>
         </div>
       </div>
 
       <div class="row d-flex justify-content-center mt-3 mb-5">
-        <div class="col-md-6">
+        <div class="col-md-8">
           <button
-            class="btn btn-outline-primary mr-2"
+            class="btn btn-outline-primary mr-2 btn-style"
             data-toggle="modal"
             data-target="#novaPostagem"
           >
             Nova postagem
           </button>
-          <a class="btn btn-outline-primary" href="#postagens">Ver postagens</a>
+          <a class="btn btn-outline-primary btn-style" href="#postagens">Ver postagens</a>
         </div>
       </div>
     </div>
 
-    <div class="col-md-6 d-flex justify-content-center mt-3 mb-5">
+    <div class="col-md-4 d-flex justify-content-center mt-3 mb-5">
       <img
         src="https://i.imgur.com/3OfT0A6.png"
         alt="figura mulher em home-office"
@@ -33,7 +33,7 @@
   </div>
 </div>
 
-<div class="container mb-5 mt-5" id="postagens">
+<div class="container mb-5 mt-5 ff" id="postagens">
   <nav>
     <div
       class="nav nav-tabs d-flex justify-content-center"
@@ -224,12 +224,12 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">
+        <button type="button" class="btn btn-secondary btn-style" data-dismiss="modal">
           Cancelar
         </button>
         <button
           type="button"
-          class="btn btn-success"
+          class="btn btn-info btn-style"
           (click)="publicar()"
           data-dismiss="modal"
         >
