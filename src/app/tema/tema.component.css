@@ -1,0 +1,5 @@
+.btn-style{
+    outline: none;
+    border-radius: 50px;
+    transition: 500ms ease-in-out;
+}
