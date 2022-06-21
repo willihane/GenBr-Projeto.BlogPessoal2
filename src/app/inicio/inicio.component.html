@@ -17,7 +17,9 @@
           >
             Nova postagem
           </button>
-          <a class="btn btn-outline-primary btn-style" href="#postagens">Ver postagens</a>
+          <a class="btn btn-outline-primary btn-style" href="#postagens"
+            >Ver postagens</a
+          >
         </div>
       </div>
     </div>
@@ -51,7 +53,8 @@
         >Todas as postagens</a
       >
 
-      <a (click)='findByIdUsuario()'
+      <a
+        (click)="findByIdUsuario()"
         class="nav-item nav-link text-info font-weight-bold"
         id="nav-minhasPostagens-tab"
         data-toggle="tab"
@@ -82,21 +85,43 @@
       role="tabpanel"
       aria-labelledby="nav-todasPostagens-tab"
     >
-
-    <div class="card-columns">
-      <div class="card text-center" *ngFor="let item of listaPostagens | orderBy : key : reverse">
-          <div class="card-body">
-              <h5 class="card-title m-0">{{item.titulo}}</h5>
-              <small class="text-muted"> Tema: {{item.tema.descricao}}</small>
-              <p class="card-text mt-3">{{item.texto}}</p>
-              <p class="card-text"><small class="text-muted">{{item.data | date:'dd/MM/yyyy'}} às
-                      {{item.data | date: 'HH:mm'}}</small></p>
-              <p class="card-text"><small class="text-muted"> Por: {{item.usuario.nome}}</small>
-              </p>
+      <div class="row d-flex justify-content-center mt-5 mb-5">
+        <div class="col-md-4">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="titulo"
+              placeholder="Digite o titulo da postagem para pesquisar"
+              [(ngModel)]="tituloPost"
+              (keyup)="findByTituloPostagem()"
+            />
           </div>
+        </div>
       </div>
-  </div>
-</div>
+
+      <div class="card-columns">
+        <div
+          class="card text-center"
+          *ngFor="let item of listaPostagens | orderBy: key:reverse"
+        >
+          <div class="card-body">
+            <h5 class="card-title m-0">{{ item.titulo }}</h5>
+            <small class="text-muted"> Tema: {{ item.tema.descricao }}</small>
+            <p class="card-text mt-3">{{ item.texto }}</p>
+            <p class="card-text">
+              <small class="text-muted"
+                >{{ item.data | date: "dd/MM/yyyy" }} às
+                {{ item.data | date: "HH:mm" }}</small
+              >
+            </p>
+            <p class="card-text">
+              <small class="text-muted"> Por: {{ item.usuario.nome }}</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div
       class="tab-pane fade"
@@ -104,28 +129,38 @@
       role="tabpanel"
       aria-labelledby="nav-minhasPostagens-tab"
     >
+      <div class="card-columns">
+        <div
+          class="card text-center"
+          *ngFor="let item of usuario.postagem | orderBy: key:reverse"
+        >
+          <div class="card-body">
+            <h5 class="card-title m-0">{{ item.titulo }}</h5>
+            <small class="text-muted"> Tema: {{ item.tema.descricao }} </small>
+            <p class="card-text mt-3">{{ item.texto }}</p>
+            <p class="card-text">
+              <small class="text-muted"
+                >{{ item.data | date: "dd/MM/yyyy" }} às
+                {{ item.data | date: "HH:mm" }}</small
+              >
+            </p>
 
-    <div class="card-columns">
-      <div class="card text-center" *ngFor="let item of usuario.postagem | orderBy : key : reverse">
-        <div class="card-body">
-          <h5 class="card-title m-0">{{ item.titulo }}</h5>
-          <small class="text-muted"> Tema: {{ item.tema.descricao }} </small>
-          <p class="card-text mt-3">{{ item.texto }}</p>
-          <p class="card-text">
-            <small class="text-muted"
-              >{{ item.data | date: "dd/MM/yyyy" }} às
-              {{ item.data | date: "HH:mm" }}</small
+            <a
+              [routerLink]="['/postagem-edit', item.id]"
+              href=""
+              class="text-info mr-3"
+              >Editar</a
             >
-          </p>
-
-          <a [routerLink]="['/postagem-edit', item.id]" href="" class="text-info mr-3">Editar</a>
-          <a [routerLink]="['/postagem-delete', item.id]" href="" class="text-danger">Apagar</a>
-
+            <a
+              [routerLink]="['/postagem-delete', item.id]"
+              href=""
+              class="text-danger"
+              >Apagar</a
+            >
+          </div>
         </div>
       </div>
     </div>
-  </div> 
-
 
     <div
       class="tab-pane fade"
@@ -134,27 +169,44 @@
       aria-labelledby="nav-postagemTema-tab"
     >
 
-    <div class="card-columns"  *ngFor='let tema of listaTemas'>
-      <div class="card text-center" *ngFor="let item of tema.postagem | orderBy : key : reverse">
-        <div class="card-body">
-          <h5 class="card-title m-0">{{ item.titulo }}</h5>
-          <p class="card-text mt-3">{{ item.texto }}</p>
-          <p class="card-text">
-            <small class="text-muted"
-              >{{ item.data | date: "dd/MM/yyyy" }} às
-              {{ item.data | date: "HH:mm" }}</small
-            >
-          </p>
-          <p class="card-text">
-            <small class="text-muted">Por: {{ item.usuario.nome }}</small>
-          </p>
+      <div class="row d-flex justify-content-center mt-5 mb-5">
+        <div class="col-md-4">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="titulo"
+              placeholder="Digite o tema da postagem para pesquisar"
+              [(ngModel)]="nomeTema"
+              (keyup)="findByDescricaoTema()"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="card-columns" *ngFor="let tema of listaTemas">
+        <div
+          class="card text-center"
+          *ngFor="let item of tema.postagem | orderBy: key:reverse"
+        >
+          <div class="card-body">
+            <h5 class="card-title m-0">{{ item.titulo }}</h5>
+            <p class="card-text mt-3">{{ item.texto }}</p>
+            <p class="card-text">
+              <small class="text-muted"
+                >{{ item.data | date: "dd/MM/yyyy" }} às
+                {{ item.data | date: "HH:mm" }}</small
+              >
+            </p>
+            <p class="card-text">
+              <small class="text-muted">Por: {{ item.usuario.nome }}</small>
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-    </div>
-  </div>
+</div>
 
 <!-- Modal -->
 <div
@@ -224,7 +276,11 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-style" data-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-secondary btn-style"
+          data-dismiss="modal"
+        >
           Cancelar
         </button>
         <button
